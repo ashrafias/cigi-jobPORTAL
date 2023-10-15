@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "290377575854",
+    "project_id": "careers-portal-3fd21",
+    "storage_bucket": "careers-portal-3fd21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290377575854:android:28cdfab418530e157aac3f",
+        "android_client_info": {
+          "package_name": "com.example.career_portal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOPvpofBrrQxXmTElZv-MkODq_ldgg4mE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
