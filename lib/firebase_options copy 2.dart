@@ -23,10 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,20 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: "AIzaSyDciXTCjL6c6tEz1tGIRzo9Jqt9bX0LppY",
-    authDomain: "cigidb-edfd1.firebaseapp.com",
-    projectId: "cigidb-edfd1",
-    storageBucket: "cigidb-edfd1.appspot.com",
-    messagingSenderId: "478425218467",
-    appId: "1:478425218467:web:a8e4fccd82c102d508ee16",
-    //measurementId: 'G-JNMP1J4269',
+    apiKey: 'AIzaSyAF9PwBbgdwR5FtXz5Z-XykhdxocGK6ogU',
+    appId: '1:290377575854:web:543b332ab815548a7aac3f',
+    messagingSenderId: '290377575854',
+    projectId: 'careers-portal-3fd21',
+    authDomain: 'careers-portal-3fd21.firebaseapp.com',
+    storageBucket: 'careers-portal-3fd21.appspot.com',
+    measurementId: 'G-JNMP1J4269',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBIwqIhDFnf_mZ_Fm4AMVSaE5euvFhr9Bk',
-    appId: '1:478425218467:android:6b6f4fb17661854908ee16',
-    messagingSenderId: '478425218467',
-    projectId: 'cigidb-edfd1',
-    storageBucket: 'cigidb-edfd1.appspot.com',
+    apiKey: 'AIzaSyCOPvpofBrrQxXmTElZv-MkODq_ldgg4mE',
+    appId: '1:290377575854:android:28cdfab418530e157aac3f',
+    messagingSenderId: '290377575854',
+    projectId: 'careers-portal-3fd21',
+    storageBucket: 'careers-portal-3fd21.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAUZ_KIP4zyv0l7JlXA1nZgEzK0WZ9etJA',
+    appId: '1:290377575854:ios:51ab284d49a4f88a7aac3f',
+    messagingSenderId: '290377575854',
+    projectId: 'careers-portal-3fd21',
+    storageBucket: 'careers-portal-3fd21.appspot.com',
+    iosBundleId: 'com.example.careerPortal',
   );
 }

@@ -1,10 +1,8 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 // ignore_for_file: prefer_const_constructors, unnecessary_string_escapes
-
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 //import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {

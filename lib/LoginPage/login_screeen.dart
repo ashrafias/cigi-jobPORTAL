@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:career_portal/ForgetPasssword/forget_password_screen.dart';
+import 'package:career_portal/Jobs/job_screen.dart';
 import 'package:career_portal/SignupPage/signup_screen.dart';
 import 'package:career_portal/services/global_methods.dart';
 import 'package:career_portal/services/global_variables.dart';
@@ -67,10 +68,12 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       });
 
       try {
-        await _auth.signInWithEmailAndPassword(
+        var userCreds = await _auth.signInWithEmailAndPassword(
           email: _emailTextController.text.trim().toLowerCase(),
           password: _passTextContoller.text.trim().toLowerCase(),
         );
+        print("Successful");
+        print(userCreds.user?.email);
         Navigator.canPop(context) ? Navigator.pop(context) : null;
       } catch (error) {
         setState(() {
@@ -112,7 +115,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 80, right: 80),
-                    child: Image.asset('assets/images/login2.jpg'),
+                    // child: Image.asset('assets/images/login.png'),
                   ),
                   const SizedBox(
                     height: 15,
@@ -261,7 +264,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                   ..onTap = () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignUp())),
+                                          //builder: (context) => SignUp())),
+                                          builder: (context) => JobScreen())),
                                 text: 'SignUp',
                                 style: const TextStyle(
                                   color: Colors.cyan,

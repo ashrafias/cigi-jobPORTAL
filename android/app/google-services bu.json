@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "478425218467",
-    "project_id": "cigidb-edfd1",
-    "storage_bucket": "cigidb-edfd1.appspot.com"
+    "project_number": "290377575854",
+    "project_id": "careers-portal-3fd21",
+    "storage_bucket": "careers-portal-3fd21.appspot.com"
   },
   "client": [
-    {
+    { 
       "client_info": {
-        "mobilesdk_app_id": "1:478425218467:android:6b6f4fb17661854908ee16",
+        "mobilesdk_app_id": "1:290377575854:android:28cdfab418530e157aac3f",
         "android_client_info": {
           "package_name": "com.example.career_portal"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBIwqIhDFnf_mZ_Fm4AMVSaE5euvFhr9Bk"
+          "current_key": "AIzaSyCOPvpofBrrQxXmTElZv-MkODq_ldgg4mE"
         }
       ],
       "services": {

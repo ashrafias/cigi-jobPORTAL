@@ -161,9 +161,9 @@ class _JobScreenState extends State<JobScreen> {
           body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('jobs')
-                  .where('jobCategory', isEqualTo: jobCategoryFilter)
-                  .where('recruitement', isEqualTo: true)
-                  .orderBy('createdAt', descending: false)
+                  // .where('jobCategory', isEqualTo: jobCategoryFilter)
+                  // .where('recruitement', isEqualTo: true)
+                  // .orderBy('createdAt', descending: false)
                   .snapshots(),
               builder: (context, AsyncSnapshot snapshot) {
                 print(snapshot.connectionState);
@@ -179,13 +179,21 @@ class _JobScreenState extends State<JobScreen> {
                         itemCount: snapshot.data?.docs.length,
                         itemBuilder: (BuildContext context, int index) {
                           return JobWidget(
-                            jobTitle: snapshot.data?.docs[index]['jobTitle'],
+                            jobTitle: snapshot.data?.docs[index]['jobCategory'],
+                            // jobDesciption: '123',
+                            // jobID: '123',
+                            // uploadedBy: '123',
+                            userImage: '123',
+                            // name: '123',
+                            // recruitment: true,
+                            // email: '123',
+                            // location: '123',
                             jobDesciption: snapshot.data?.docs[index]
                                 ['jobDescription'],
                             jobID: snapshot.data?.docs[index]['jobId'],
                             uploadedBy: snapshot.data?.docs[index]
-                                ['uploadedBy'],
-                            userImage: snapshot.data?.docs[index]['userImage'],
+                                ['uploadedby'],
+                            // userImage: snapshot.data?.docs[index]['userImage'],
                             name: snapshot.data?.docs[index]['name'],
                             recruitment: snapshot.data?.docs[index]
                                 ['recruitment'],

@@ -1,4 +1,4 @@
-import 'package:career_portal/Search/profile_company.dart';
+//import 'package:career_portal/Search/profile_company.dart';
 import 'package:flutter/material.dart';
 
 class AllWorkersWidget extends StatefulWidget {

@@ -60,11 +60,46 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     super.initState();
   }
 
+  void _showImageDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Please choose an option'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () {
+                    // create mget from camera
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.camera,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      Text(
+                        'Camera',
+                        style: TextStyle(color: Colors.purple),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
+        /*body: Stack(
         children: [
           CachedNetworkImage(
             imageUrl: signUpUrlImage,
@@ -364,7 +399,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             ),
           ),
         ],
-      ),
-    );
+      ), */
+        );
   }
 }
