@@ -1,9 +1,17 @@
+// ignore_for_file: use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:career_portal/services/global_methods.dart';
 import 'package:career_portal/services/global_variables.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -33,8 +41,9 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
   bool _obscureText = true;
   File? imageFile;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isLoading = false;
-
+  String? imageUrl;
   void dispose() {
     _animationController.dispose();
     super.dispose();
@@ -65,16 +74,17 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Please choose an option'),
+            title: const Text('Please choose an option'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 InkWell(
                   onTap: () {
                     // create mget from camera
+                    _getFromCamera();
                   },
                   child: Row(
-                    children: [
+                    children: const [
                       Padding(
                         padding: EdgeInsets.all(4.0),
                         child: Icon(
@@ -89,17 +99,113 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
+                InkWell(
+                  onTap: () {
+                    // get from gallery
+                    _getFromGallery();
+                  },
+                  child: Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      Text(
+                        'Gallery',
+                        style: TextStyle(color: Colors.purple),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           );
         });
   }
 
+  void _getFromCamera() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    _cropImage(pickedFile!.path);
+    Navigator.pop(context);
+  }
+
+  void _getFromGallery() async {
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    _cropImage(pickedFile!.path);
+
+    Navigator.pop(context);
+  }
+
+  void _cropImage(filePath) async {
+    CroppedFile? croppedImage = await ImageCropper()
+        .cropImage(sourcePath: filePath, maxHeight: 1080, maxWidth: 1080);
+
+    if (croppedImage != null) {
+      setState(() {
+        imageFile = File(croppedImage.path);
+      });
+    }
+  }
+
+  void _submitFormOnSignUp() async {
+    final isValid = _signUpFormKey.currentState!.validate();
+    if (isValid) {
+      if (imageFile == null) {
+        GlobalMethod.showErrorDialog(
+          error: 'Please pick an image',
+          ctx: context,
+        );
+        return;
+      }
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        await _auth.createUserWithEmailAndPassword(
+          email: _emailTextContoller.text.trim().toLowerCase(),
+          password: _passTextContoller.text.trim(),
+        );
+        final User? user = _auth.currentUser;
+        final _uid = user!.uid;
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('userImages')
+            .child(_uid + ' .jpg');
+        await ref.putFile(imageFile!);
+        imageUrl = await ref.getDownloadURL();
+        FirebaseFirestore.instance.collection('users').doc(_uid).set({
+          'id': _uid,
+          'name': _fullNameContoller.text,
+          'email': _emailTextContoller.text,
+          'userImage': imageUrl,
+          "phohneNumber": _phoneNumberController.text,
+          'location': _locationController.text,
+          'createdAt': Timestamp.now(),
+        });
+        Navigator.canPop(context) ? Navigator.of(context) : null;
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+        GlobalMethod.showErrorDialog(error: error.toString(), ctx: context);
+      }
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        /*body: Stack(
+      body: Stack(
         children: [
           CachedNetworkImage(
             imageUrl: signUpUrlImage,
@@ -126,6 +232,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                         GestureDetector(
                           onTap: () {
                             //Create ShowImageDialog
+                            _showImageDialog();
                           },
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -339,6 +446,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                             : MaterialButton(
                                 onPressed: () {
                                   //create submit form on signUp
+                                  _submitFormOnSignUp();
                                 },
                                 color: Colors.cyan,
                                 elevation: 8,
@@ -399,7 +507,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             ),
           ),
         ],
-      ), */
-        );
+      ),
+    );
   }
 }

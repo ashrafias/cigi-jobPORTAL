@@ -264,8 +264,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                   ..onTap = () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          //builder: (context) => SignUp())),
-                                          builder: (context) => JobScreen())),
+                                          builder: (context) => SignUp())),
+                                //builder: (context) => JobScreen())),
                                 text: 'SignUp',
                                 style: const TextStyle(
                                   color: Colors.cyan,
